@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          fetch('/api/games')
+              .then(response => response.json())
+              .then(games => {
+                  const gamesGrid = document.querySelector('.games-grid');
+                  games.forEach(game => {
+                      const gameElement = document.createElement('div');
+                      gameElement.className = 'game-item';
+                      gameElement.innerHTML = `<a href="/${game}">${game}</a>`;
+                      gamesGrid.appendChild(gameElement);
+                  });
+              })
+              .catch(error => console.error('Error loading the games:', error));
+      });
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <title>Welcome to THE JAM</title>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <h1>THE GAMES</h1>
+        </div>
+        <div class="hero">
+            <h2>Play some games</h2>
+            <p>do it now</p>
+        </div>
+    </header>
+    <main>
+        <section class="games-grid">
+            <!-- Games will be dynamically inserted here by server-side code -->
+        </section>
+    </main>
+    <footer>
+        <p>GAME JAM © 2024</p>
+    </footer>
+</body>
+</html>

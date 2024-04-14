@@ -1,0 +1,36 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f0f0;
+  color: #333;
+}
+
+header {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.navbar h1 {
+  margin: 0;
+}
+
+.hero {
+  margin: 20px 0;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  padding: 20px;
+}
+
+footer {
+  text-align: center;
+  padding: 10px 0;
+  background: #222;
+  color: #fff;
+}

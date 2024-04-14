@@ -1,0 +1,37 @@
+version: "3"
+services:
+  jam:
+    restart: unless-stopped
+    container_name: jam
+    image: nickheyer/gamejamgames:latest
+    hostname: jam
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    networks:
+      - saltbox
+    volumes:
+      - /opt/jam/games:/usr/src/app/src/games
+    labels:
+      com.github.saltbox.saltbox_managed: true
+      traefik.enable: true
+      traefik.http.routers.jam-http.entrypoints: web
+      traefik.http.routers.jam-http.middlewares: globalHeaders@file,redirect-to-https,gzip
+      traefik.http.routers.jam-http.rule: Host(`jam.heyer.app`)
+      traefik.http.routers.jam-http.service: jam
+      traefik.http.routers.jam.entrypoints: websecure
+      traefik.http.routers.jam.middlewares: globalHeaders@file,secureHeaders@file
+      traefik.http.routers.jam.rule: Host(`jam.heyer.app`)
+      traefik.http.routers.jam.service: jam
+      traefik.http.routers.jam.tls.certresolver: cfdns
+      traefik.http.routers.jam.tls.options: securetls@file
+      traefik.http.services.jam.loadbalancer.server.port: 4876
+
+volumes:
+  static:
+
+networks:
+  saltbox:
+    external: true
+
