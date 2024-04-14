@@ -20,5 +20,6 @@ jobs:
       - name: Clone game repositories
         run: |
           jq -r '.[] | "\(.repo) \(.author)"' games.json | while read repo author; do
+            echo "Adding game authored by ${author} (${repo})"
             sudo git clone "$repo" "/opt/jam/games/$(basename $repo)"
           done
