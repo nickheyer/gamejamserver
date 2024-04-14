@@ -1,0 +1,24 @@
+name: Update Games Repositories
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-games:
+    runs-on: [self-hosted, prod]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Clear existing games directory
+        run: |
+          sudo rm -rf /opt/jam/games/*
+          sudo mkdir -p /opt/jam/games
+
+      - name: Clone game repositories
+        run: |
+          jq -r '.[] | "\(.repo) \(.author)"' games.json | while read repo author; do
+            sudo git clone "$repo" "/opt/jam/games/$(basename $repo)"
+          done
